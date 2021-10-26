@@ -3,12 +3,10 @@ import { FormControl, FormLabel } from '@chakra-ui/form-control'
 import { Input } from '@chakra-ui/input'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import React from 'react'
-import styles from '../styles/login.module.sass'
 
 export default function Login() {
 	return (
 		<Flex
-			className={styles.wrapper}
 			flexDir='column'
 			w='100%'
 			h='100vh'
@@ -16,7 +14,6 @@ export default function Login() {
 			backgroundSize='cover'
 			backgroundImage='https://sso.tju.edu.cn/cas/local/imgs/logonbg1.jpg'>
 			<Flex
-				className={styles.header}
 				justifyContent='center'
 				alignItems='center'
 				height='20%'
@@ -26,13 +23,11 @@ export default function Login() {
 				</Heading>
 			</Flex>
 			<Flex
-				className={styles.content}
 				h='70%'
 				p={12}
 				justifyContent='center'
 				alignItems='center'>
 				<Flex
-					className={styles.loginbox}
 					background='#ffffffee'
 					flexDir='column'
                     justifyContent='space-evenly'
@@ -54,7 +49,6 @@ export default function Login() {
 				</Flex>
 			</Flex>
 			<Flex
-				className={styles.footer}
 				h='10%'
 				backgroundColor='#4b9ced99'
 				justifyContent='center'
