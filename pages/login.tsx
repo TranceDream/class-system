@@ -2,9 +2,11 @@ import { Button } from '@chakra-ui/button'
 import { FormControl, FormLabel } from '@chakra-ui/form-control'
 import { Input } from '@chakra-ui/input'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function Login() {
+	const router = useRouter()
 	return (
 		<Flex
 			flexDir='column'
@@ -33,8 +35,8 @@ export default function Login() {
                     justifyContent='space-evenly'
 					h='100%'
 					w='33%'
-					px={24}
-					py={16}
+					px={16}
+					py={8}
 					borderRadius={8}>
                     <Heading>登录</Heading>
 					<FormControl id='Username'>
@@ -45,7 +47,9 @@ export default function Login() {
 						<FormLabel>Password</FormLabel>
 						<Input placeholder='输入密码' type='password' />
 					</FormControl>
-					<Button mt={2} background='#4b9ced99' color='white'>Submit</Button>
+					<Button mt={2} background='#4b9ced99' color='white' onClick={() => {
+						router.push('/')
+					}}>Submit</Button>
 				</Flex>
 			</Flex>
 			<Flex
