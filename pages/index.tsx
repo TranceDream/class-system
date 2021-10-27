@@ -4,28 +4,41 @@ import { useEffect, useState } from 'react'
 import Courses from '../components/student/courses'
 import Grade from '../components/student/grade'
 import StudentInfo from '../components/student/info'
-
-const studentTabs = [
-	{
-		title: '个人信息',
-		component: <StudentInfo />,
-	},
-	{
-		title: '课程列表',
-		component: <Courses />,
-	},
-	{
-		title: '成绩查询',
-		component: <Grade />,
-	},
-]
+import cookie from 'cookie-cutter'
 
 export default function Home() {
-	// const router = useRouter()
-	// useEffect(() => {
-	// 	router.push('/login')
-	// })
-	const [tab, setTab] = useState(studentTabs[0])
+	const [id, setId] = useState(undefined)
+	const [type, setType] = useState('student')
+	const [tabs, setTabs] = useState([{ title: '', component: <Flex /> }])
+	const [currentTab, setCurrentTab] = useState(tabs[0])
+	const router = useRouter()
+
+	useEffect(() => {
+		if (cookie.get('id') != 'undefined') {
+			setId(cookie.get('id'))
+			if (cookie.get('type') == 'student') {
+				const studentTabs = [
+					{
+						title: '个人信息',
+						component: <StudentInfo id={cookie.get('id')} />,
+					},
+					{
+						title: '课程列表',
+						component: <Courses id={cookie.get('id')} />,
+					},
+					{
+						title: '成绩查询',
+						component: <Grade />,
+					},
+				]
+				setTabs(studentTabs)
+				setCurrentTab(studentTabs[0])
+			}
+		} else {
+			router.push('/login')
+		}
+	}, [])
+
 	return (
 		<Flex
 			h='100vh'
@@ -44,27 +57,33 @@ export default function Home() {
 				</Heading>
 				<Flex mr={8} py={8} h='100%' alignItems='center'>
 					<Text size='md' color='white'>
-						学生
+						{type}
 					</Text>
 					<Divider orientation='vertical' mx={4} />
 					<Text size='md' color='white'>
-						李德新(3019244358)
+						{id}
 					</Text>
-					<Link ml={4} color='white' href='/login'>
+					<Link
+						ml={4}
+						color='white'
+						onClick={() => {
+							cookie.set('id', undefined)
+							router.push('/login')
+						}}>
 						退出
 					</Link>
 				</Flex>
 			</Flex>
 			<Divider bg='#707070' />
 			<Flex pl={4} flexDir='row' bg='#2d62a3'>
-				{studentTabs.map((e) => {
+				{tabs.map((e) => {
 					return (
 						<Flex
 							key={e.title}
 							color='white'
 							p={4}
 							onClick={() => {
-								setTab(e)
+								setCurrentTab(e)
 							}}
 							cursor='pointer'
 							transition='all 0.25s'
@@ -76,7 +95,7 @@ export default function Home() {
 			</Flex>
 
 			<Flex flex='1' flexDir='column' alignItems='center' p={4}>
-				{tab.component}
+				{currentTab.component}
 			</Flex>
 			<Flex
 				flexDir='column'

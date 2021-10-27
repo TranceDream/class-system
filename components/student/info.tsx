@@ -1,11 +1,11 @@
 import { Flex, Text, Heading, SimpleGrid, Skeleton } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
-export default function Info() {
+export default function Info({id}) {
 	const [info, setInfo] = useState(undefined)
 	useEffect(() => {
 		fetch(
-			'http://192.168.31.230:3000/students/personal?student_id=301906060104'
+			'http://192.168.31.230:3000/students/personal?student_id=' + id
 		)
 			.then((res) => {
 				return res.json()
@@ -14,7 +14,6 @@ export default function Info() {
 				setInfo(v)
 			})
 	}, [])
-	console.log(info)
 	return (
 		<Flex w='100%' bg='white' p={12} flexDir='column' borderRadius={8}>
 			<Heading size='xl'>个人资料</Heading>
